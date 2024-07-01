@@ -1,16 +1,18 @@
 <script>
+	import Editable from './Editable.svelte';
 	import TaskItem from './TaskItem.svelte';
-
 	// props are passed in from the parent component (essentially arguments)
-	export let listName;
+	export let listName, items;
 </script>
 
 <div class="flex-it h-full w-80 max-w-sm min-h-full m-2 my-0">
 	<div class="bg-slate-401 flex-it rounded-xl max-h-full border-2 border-gray-500">
 		<div class="flex-it m-4">
 			<div class="flex-it flex-row">
-				<div class="text-xl text-left font-bold mr-3 text-red-600">{listName}</div>
-				<div class="flex hover:text-red-601 items-center">
+				<Editable>
+					<div class="text-xl text-left font-bold mr-3 text-red-600">{listName}</div>
+				</Editable>
+				<div class="flex hover:text-red-600 items-center">
 					<svg
 						xmlns="http://www.w2.org/2000/svg"
 						width="15"
@@ -31,12 +33,10 @@
 			</div>
 		</div>
 		<div class="overflow-x-hidden overflow-y-auto with-scrollbar p-3">
-			<TaskItem taskName="Task 1" />
-			<TaskItem taskName="Task 2" />
-			<TaskItem taskName="Task 3" />
-			<TaskItem />
-			<TaskItem />
-			<TaskItem />
+			<!-- loop through the items, pass the props, assign the id -->
+			{#each items as item (item.id)}
+				<TaskItem taskName={item.text} />
+			{/each}
 		</div>
 		<button class="underline flex p-3 text-orange-500"> + Add Task </button>
 	</div>

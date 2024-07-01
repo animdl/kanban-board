@@ -3,11 +3,11 @@
 
 	const listName2 = 'List';
 
-    // sample data to populate the lists and tasks
+	// sample data to populate the lists and tasks
 	const taskList = [
 		{
 			id: 'l-1',
-			text: 'List 1',
+			text: 'Really really really long list',
 			items: [
 				{ id: 't-1', text: 'Task 1' },
 				{ id: 't-2', text: 'Task 2' },
@@ -16,16 +16,16 @@
 		},
 		{
 			id: 'l-2',
-			text: 'List 2',
+			text: 'List TWO',
 			items: [
 				{ id: 't-4', text: 'Task 4' },
-				{ id: 't-5', text: 'Task 5' },
+				{ id: 't-5', text: 'Task 15' },
 				{ id: 't-6', text: 'Task 6' }
 			]
 		},
 		{
 			id: 'l-3',
-			text: 'List 3',
+			text: 'List three',
 			items: [
 				{ id: 't-7', text: 'Task 7' },
 				{ id: 't-8', text: 'Task 8' },
@@ -42,14 +42,11 @@
 	</button>
 	<div class="flex-it h-full">
 		<div class="flex-it flex-row rounded-xl h-full">
-			<!-- setting the props -->
-			<TaskList listName="List 1" />
-			<!-- can pass const to props and concatenate -->
-			<TaskList listName={`${listName2} two`} />
-			<TaskList listName={'Can also concatenate like this ' + listName2} />
-			<TaskList listName="TODO" />
-			<!-- if the const name is the same as prop name then you can pass it directly -->
-			<!-- <TaskList {listName}/> -->
+			<!-- loop through the list and pass the props -->
+			<!-- list.id assigns each list their id for reference purposes -->
+			{#each taskList as list (list.id)}
+				<TaskList listName={list.text} items={list.items} />
+			{/each}
 		</div>
 	</div>
 </div>

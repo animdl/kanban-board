@@ -1,10 +1,12 @@
 <script>
+	import Editable from './Editable.svelte';
 	// can give props a default value
 	export let taskName = 'Default Task Name';
 </script>
 
+<!-- wrap in Editable and call the slot -->
 <div class="flex-it border border-solid p-2 rounded-xl bg-slate-500 mb-2 cursor-pointer">
-	<div class="flex-it">
+	<Editable>
 		<div class="flex-it flex-row">
 			<div class="flex flex-1">{taskName}</div>
 			<div class="flex items-end hover:text-red-600">
@@ -26,5 +28,5 @@
 				</svg>
 			</div>
 		</div>
-	</div>
+	</Editable>
 </div>
