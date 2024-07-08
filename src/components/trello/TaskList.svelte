@@ -2,15 +2,24 @@
 	import Editable from './Editable.svelte';
 	import TaskItem from './TaskItem.svelte';
 	// props are passed in from the parent component (essentially arguments)
-	export let listName, items;
+	export let list;
 </script>
 
 <div class="flex-it h-full w-80 max-w-sm min-h-full m-2 my-0">
 	<div class="bg-slate-401 flex-it rounded-xl max-h-full border-2 border-gray-500">
 		<div class="flex-it m-4">
 			<div class="flex-it flex-row">
-				<Editable>
-					<div class="text-xl text-left font-bold mr-3 text-red-600">{listName}</div>
+				<!-- binds the prop variable "value" from Editable to a var here; this creates a default value for the textArea in Editable -->
+				<!-- bind is essentially pass-by-reference, regular prop is pass-by-value -->
+				<!-- can call dispatched event directly from function -->
+				<!-- the event argument within the function can reference the arguments passed by the dispatch event -->
+				<Editable
+					bind:value={list.text}
+					on:Save={(event) => {
+						alert('This is the new List name: ' + event.detail.newText);
+					}}
+				>
+					<div class="text-xl text-left font-bold mr-3 text-red-600">{list.text}</div>
 				</Editable>
 				<div class="flex hover:text-red-600 items-center">
 					<svg
@@ -34,8 +43,10 @@
 		</div>
 		<div class="overflow-x-hidden overflow-y-auto with-scrollbar p-3">
 			<!-- loop through the items, pass the props, assign the id -->
-			{#each items as item (item.id)}
-				<TaskItem taskName={item.text} />
+			<!-- can pass in the individual elements from the object -->
+			<!-- or can pass the entire object, and handle the assignment on the receiver side -->
+			{#each list.items as item (item.id)}
+				<TaskItem {item} />
 			{/each}
 		</div>
 		<button class="underline flex p-3 text-orange-500"> + Add Task </button>

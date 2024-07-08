@@ -45,7 +45,7 @@
 			<!-- loop through the list and pass the props -->
 			<!-- list.id assigns each list their id for reference purposes -->
 			{#each taskList as list (list.id)}
-				<TaskList listName={list.text} items={list.items} />
+				<TaskList {list} />
 			{/each}
 		</div>
 	</div>
