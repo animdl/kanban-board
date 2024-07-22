@@ -1,9 +1,6 @@
 <script>
-	import { onDestroy } from 'svelte';
 	import TaskList from '../../components/trello/TaskList.svelte';
 	import { taskListStore } from '../../stores/tasks';
-
-	console.log(taskListStore);
 
 	const listName2 = 'List';
 
@@ -38,29 +35,18 @@
 		}
 	];
 
-	let _taskList;
-
-	const unsubscribe = taskListStore.subscribe((value) => {
-		console.log(value);
-		_taskList = value;
-	})
-
-	// called on page close
-	onDestroy(() => {
-		console.log('Destroyed');
-		unsubscribe();
-	})
-
+	// display the subbed store in the console
+	/*
+	$: {
+		console.log($taskListStore)
+	}
+	*/
 </script>
 
 <div class="p-10 h-full">
 
-	<a href="/">
-		Home
-	</a>
-
 	<div>
-		{JSON.stringify(_taskList)}
+		{JSON.stringify($taskListStore)}
 	</div>
 
 	<div class="text-white text-2xl mb-6">Trello List</div>
