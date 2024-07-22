@@ -1,8 +1,22 @@
 <script>
 	import Editable from './Editable.svelte';
 	import TaskItem from './TaskItem.svelte';
+	import { taskListStore } from '../../stores/tasks';
+	import { onDestroy } from 'svelte';
 	// props are passed in from the parent component (essentially arguments)
 	export let list;
+
+	let taskList;
+
+	const unsubscribe = taskListStore.subscribe((value) => {
+		taskList = value;
+	})
+
+	// called on page close
+	onDestroy(() => {
+		unsubscribe();
+	})
+
 </script>
 
 <div class="flex-it h-full w-80 max-w-sm min-h-full m-2 my-0">
@@ -22,6 +36,7 @@
 					<div class="text-xl text-left font-bold mr-3 text-red-600">{list.text}</div>
 				</Editable>
 				<div class="flex hover:text-red-600 items-center">
+					<!-- garbage can icon -->
 					<svg
 						xmlns="http://www.w2.org/2000/svg"
 						width="15"
