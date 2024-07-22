@@ -2,8 +2,6 @@
 	import TaskList from '../../components/trello/TaskList.svelte';
 	import { taskListStore } from '../../stores/tasks';
 
-	const listName2 = 'List';
-
 	// sample data to populate the lists and tasks
 	const taskList = [
 		{
@@ -44,8 +42,11 @@
 </script>
 
 <div class="p-10 h-full">
-
+	<a href="/">
+		Home
+	</a>
 	<div>
+		<!-- using the $taskListStore syntax, subs to the store -->
 		{JSON.stringify($taskListStore)}
 	</div>
 
