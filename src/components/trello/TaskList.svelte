@@ -16,7 +16,7 @@
 				<Editable
 					bind:value={list.text}
 					on:Save={(event) => {
-						alert('This is the new List name: ' + event.detail.newText);
+						alert(`Should update List: ${event.detail.newText}`);
 					}}
 				>
 					<div class="text-xl text-left font-bold mr-3 text-red-600">{list.text}</div>
@@ -42,12 +42,13 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="overflow-x-hidden overflow-y-auto with-scrollbar p-3">
 			<!-- loop through the items, pass the props, assign the id -->
 			<!-- can pass in the individual elements from the object -->
 			<!-- or can pass the entire object, and handle the assignment on the receiver side -->
 			{#each list.items as item (item.id)}
-				<TaskItem {item} />
+				<TaskItem {item} on:Save={(event) => alert(`Should update item: ${event.detail.newText}`)} />
 			{/each}
 		</div>
 		<button class="underline flex p-3 text-orange-500"> + Add Task </button>

@@ -2,15 +2,13 @@
 	import Editable from './Editable.svelte';
 	export let item;
 
-	function dispatched(event) {
-		alert('This is the new Item name: ' + event.detail.newText);
-	}
 </script>
 
 <!-- wrap in Editable and call the slot -->
 <div class="flex-it border border-solid p-2 rounded-xl bg-slate-500 mb-2 cursor-pointer">
 	<!-- can call -->
-	<Editable bind:value={item.text} on:Save={dispatched}>
+	<!-- the empty on:Save will forward the event to the parent component --> 
+	<Editable bind:value={item.text} on:Save>
 		<div class="flex-it flex-row">
 			<div class="flex flex-1">{item.text}</div>
 			<div class="flex items-end hover:text-red-600">
