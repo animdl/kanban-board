@@ -2,7 +2,7 @@
 	import Editable from './Editable.svelte';
 	import TaskItem from './TaskItem.svelte';
 	// props are passed in from the parent component (essentially arguments)
-	export let list;
+	export let list, listIndex;
 </script>
 
 <div class="flex-it h-full w-80 max-w-sm min-h-full m-2 my-0">
@@ -48,7 +48,7 @@
 			<!-- can pass in the individual elements from the object -->
 			<!-- or can pass the entire object, and handle the assignment on the receiver side -->
 			{#each list.items as item (item.id)}
-				<TaskItem {item} on:Save={(event) => alert(`Should update item: ${event.detail.newText}`)} />
+				<TaskItem task={item} {listIndex} />
 			{/each}
 		</div>
 		<button class="underline flex p-3 text-orange-500"> + Add Task </button>

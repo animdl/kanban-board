@@ -1,16 +1,25 @@
 <script>
+	import { taskListStore } from '../../stores/tasks';
 	import Editable from './Editable.svelte';
-	export let item;
 
+	export let task, listIndex;
 </script>
 
 <!-- wrap in Editable and call the slot -->
 <div class="flex-it border border-solid p-2 rounded-xl bg-slate-500 mb-2 cursor-pointer">
 	<!-- can call -->
-	<!-- the empty on:Save will forward the event to the parent component --> 
-	<Editable bind:value={item.text} on:Save>
+	<!-- the empty on:Save will forward the event to the parent component -->
+	<Editable
+		bind:value={task.text}
+		on:Save={(event) => {
+			taskListStore.updateTask({
+				id: task.id,
+				text: event.detail.newText
+			}, listIndex);
+		}}
+	>
 		<div class="flex-it flex-row">
-			<div class="flex flex-1">{item.text}</div>
+			<div class="flex flex-1">{task.text}</div>
 			<div class="flex items-end hover:text-red-600">
 				<!-- garbage can icon -->
 				<svg

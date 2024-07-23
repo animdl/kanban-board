@@ -1,9 +1,10 @@
-import { writable } from 'svelte/store';
+import { list } from 'postcss';
+import { writable, get } from 'svelte/store';
 
 // sample data to populate the lists and tasks
 const DEFAULT_TASK_LIST = [
 	{
-		id: 'l-1',
+		id: 'l-0',
 		text: 'Really really really long list',
 		items: [
 			{ id: 't-1', text: 'Task 1' },
@@ -12,7 +13,7 @@ const DEFAULT_TASK_LIST = [
 		]
 	},
 	{
-		id: 'l-2',
+		id: 'l-1',
 		text: 'List TWO',
 		items: [
 			{ id: 't-4', text: 'Task 4' },
@@ -21,7 +22,7 @@ const DEFAULT_TASK_LIST = [
 		]
 	},
 	{
-		id: 'l-3',
+		id: 'l-2',
 		text: 'List three',
 		items: [
 			{ id: 't-7', text: 'Task 7' },
@@ -33,7 +34,23 @@ const DEFAULT_TASK_LIST = [
 
 function createStore() {
 	const taskList = writable(DEFAULT_TASK_LIST);
-	return taskList;
+
+	const { subscribe } = taskList;
+
+	return {
+		subscribe,
+		updateTask: (task, listIndex) => {
+			taskList.update((list) => {
+				const taskIndex = list[listIndex].items.findIndex((item) => item.id === task.id);
+
+				if (taskIndex > -1) {
+					list[listIndex].items[taskIndex] = { ...task };
+				}
+
+				return list;
+			});
+		}
+	};
 }
 
 export const taskListStore = createStore();

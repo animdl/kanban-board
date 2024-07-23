@@ -16,8 +16,8 @@
 		<div class="flex-it flex-row rounded-xl h-full">
 			<!-- loop through the list and pass the props -->
 			<!-- list.id assigns each list their id for reference purposes -->
-			{#each $taskListStore as list (list.id)}
-				<TaskList {list} />
+			{#each $taskListStore as list, listIndex (list.id)}
+				<TaskList {list} {listIndex}/>
 			{/each}
 		</div>
 	</div>
