@@ -1,4 +1,5 @@
 <script>
+	import { taskListStore } from '../../stores/tasks';
 	import Editable from './Editable.svelte';
 	import TaskItem from './TaskItem.svelte';
 	// props are passed in from the parent component (essentially arguments)
@@ -51,6 +52,11 @@
 				<TaskItem task={item} {listIndex} />
 			{/each}
 		</div>
-		<button class="underline flex p-3 text-orange-500"> + Add Task </button>
+		<button
+			on:click={() => taskListStore.addTask(listIndex)}
+			class="underline flex p-3 text-orange-500"
+		>
+			+ Add Task
+		</button>
 	</div>
 </div>
