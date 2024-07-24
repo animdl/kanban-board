@@ -2,20 +2,35 @@
 	import { taskListStore } from '../../stores/tasks';
 	import Editable from './Editable.svelte';
 
-	export let task, listIndex;
+	export let task, listIndex, taskIndex;
+
+	// function called when the taskItem div is dragged
+	// e is the drag event
+	// sets listIndex and taskIndex as the data to be transferred
+	function dragStart(e) {
+		const data = { listIndex, taskIndex };
+		e.dataTransfer.setData('text/plain', JSON.stringify(data));
+	}
 </script>
 
 <!-- wrap in Editable and call the slot -->
-<div class="flex-it border border-solid p-2 rounded-xl bg-slate-500 mb-2 cursor-pointer">
-	<!-- can call -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<div
+	draggable={true}
+	on:dragstart={dragStart}
+	class="flex-it border border-solid p-2 rounded-xl bg-slate-500 mb-2 cursor-pointer"
+>
 	<!-- the empty on:Save will forward the event to the parent component -->
 	<Editable
 		bind:value={task.text}
 		on:Save={(event) => {
-			taskListStore.updateTask({
-				id: task.id,
-				text: event.detail.newText
-			}, listIndex);
+			taskListStore.updateTask(
+				{
+					id: task.id,
+					text: event.detail.newText
+				},
+				listIndex
+			);
 		}}
 	>
 		<div class="flex-it flex-row">

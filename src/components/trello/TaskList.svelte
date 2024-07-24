@@ -4,10 +4,24 @@
 	import TaskItem from './TaskItem.svelte';
 	// props are passed in from the parent component (essentially arguments)
 	export let list, listIndex;
+
+	// function is called when a draggable item is dropped onto the list div
+	// the event data is transferred from the function in the dragged item to the function in the dropped list
+	function drop(e) {
+		const sourceJson = e.dataTransfer.getData('text/plain');
+		const sourceData = JSON.parse(sourceJson);
+
+		taskListStore.moveTask(sourceData, listIndex)
+	}
 </script>
 
 <div class="flex-it h-full w-80 max-w-sm min-h-full m-2 my-0">
-	<div class="bg-slate-401 flex-it rounded-xl max-h-full border-2 border-gray-500">
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<div
+		on:dragover|preventDefault={() => {}}
+		on:drop={drop}
+		class="bg-slate-401 flex-it rounded-xl max-h-full border-2 border-gray-500"
+	>
 		<div class="flex-it m-4">
 			<div class="flex-it flex-row">
 				<!-- binds the prop variable "value" from Editable to a var here; this creates a default value for the textArea in Editable -->
@@ -48,8 +62,8 @@
 			<!-- loop through the items, pass the props, assign the id -->
 			<!-- can pass in the individual elements from the object -->
 			<!-- or can pass the entire object, and handle the assignment on the receiver side -->
-			{#each list.items as item (item.id)}
-				<TaskItem task={item} {listIndex} />
+			{#each list.items as item, taskIndex (item.id)}
+				<TaskItem task={item} {listIndex} {taskIndex} />
 			{/each}
 		</div>
 		<button
