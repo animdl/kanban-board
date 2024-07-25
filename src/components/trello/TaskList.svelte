@@ -1,13 +1,15 @@
 <script context="module">
-	import { writable } from "svelte/store"
+	import { writable } from 'svelte/store';
 	// creates a stored variable that can be subscribed to
-	let listHoverId = writable(null)
+	let listHoverId = writable(null);
 </script>
 
 <script>
 	import { taskListStore } from '../../stores/tasks';
 	import Editable from './Editable.svelte';
 	import TaskItem from './TaskItem.svelte';
+	import { flip } from 'svelte/animate';
+	import { fade, fly } from 'svelte/transition';
 	// props are passed in from the parent component (essentially arguments)
 	export let list, listIndex;
 
@@ -17,9 +19,9 @@
 		const sourceJson = e.dataTransfer.getData('text/plain');
 		const sourceData = JSON.parse(sourceJson);
 
-		taskListStore.moveTask(sourceData, listIndex)
-		listHoverId.set(null)
-}
+		taskListStore.moveTask(sourceData, listIndex);
+		listHoverId.set(null);
+	}
 </script>
 
 <div class="flex-it h-full w-80 max-w-sm min-h-full m-2 my-0">
@@ -28,7 +30,7 @@
 	<!-- if a task is being moved(hovering) over a list, the list will have a border glow -->
 	<div
 		on:dragenter={() => {
-			listHoverId.set(list.id)
+			listHoverId.set(list.id);
 		}}
 		on:dragover|preventDefault={() => {}}
 		on:drop={drop}
@@ -76,7 +78,13 @@
 			<!-- can pass in the individual elements from the object -->
 			<!-- or can pass the entire object, and handle the assignment on the receiver side -->
 			{#each list.items as item, taskIndex (item.id)}
-				<TaskItem task={item} {listIndex} {taskIndex} />
+				<div 
+					out:fade 
+					in:fly={{ y: 200 }} 
+					animate:flip
+				>
+					<TaskItem task={item} {listIndex} {taskIndex} />
+				</div>
 			{/each}
 		</div>
 		<button
