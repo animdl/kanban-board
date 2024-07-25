@@ -32,7 +32,12 @@ const DEFAULT_TASK_LIST = [
 ];
 
 function createStore() {
-	const taskList = writable(DEFAULT_TASK_LIST);
+	// enables persistence
+	// define local storage
+	const storedList = localStorage.getItem("trello-store")
+	// if nothing in local storage, set the task list to the default
+	const _taskList = storedList ? JSON.parse(storedList) : DEFAULT_TASK_LIST
+	const taskList = writable(_taskList)
 
 	const { subscribe, update } = taskList;
 
@@ -83,3 +88,11 @@ function createStore() {
 }
 
 export const taskListStore = createStore();
+
+// store data
+// write list to storage
+taskListStore.subscribe((list) => {
+	if (list) {
+		localStorage.setItem("trello-store", JSON.stringify(list))
+	}
+})
