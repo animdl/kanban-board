@@ -1,3 +1,9 @@
+<script context="module">
+	import { writable } from "svelte/store"
+	// creates a stored variable that can be subscribed to
+	let listHoverId = writable(null)
+</script>
+
 <script>
 	import { taskListStore } from '../../stores/tasks';
 	import Editable from './Editable.svelte';
@@ -12,14 +18,21 @@
 		const sourceData = JSON.parse(sourceJson);
 
 		taskListStore.moveTask(sourceData, listIndex)
-	}
+		listHoverId.set(null)
+}
 </script>
 
 <div class="flex-it h-full w-80 max-w-sm min-h-full m-2 my-0">
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<!-- class hovering is assigned if the condition is true -->
+	<!-- if a task is being moved(hovering) over a list, the list will have a border glow -->
 	<div
+		on:dragenter={() => {
+			listHoverId.set(list.id)
+		}}
 		on:dragover|preventDefault={() => {}}
 		on:drop={drop}
+		class:hovering={list.id === $listHoverId}
 		class="bg-slate-401 flex-it rounded-xl max-h-full border-2 border-gray-500"
 	>
 		<div class="flex-it m-4">
@@ -74,3 +87,9 @@
 		</button>
 	</div>
 </div>
+
+<style>
+	.hovering {
+		border: 2px solid orange;
+	}
+</style>

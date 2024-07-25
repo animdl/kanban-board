@@ -1,4 +1,4 @@
-import { writable, get } from 'svelte/store';
+import { writable } from 'svelte/store';
 
 // sample data to populate the lists and tasks
 const DEFAULT_TASK_LIST = [
