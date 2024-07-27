@@ -34,10 +34,10 @@ const DEFAULT_TASK_LIST = [
 function createStore() {
 	// enables persistence
 	// define local storage
-	const storedList = localStorage.getItem("trello-store")
+	const storedList = localStorage.getItem('trello-store');
 	// if nothing in local storage, set the task list to the default
-	const _taskList = storedList ? JSON.parse(storedList) : DEFAULT_TASK_LIST
-	const taskList = writable(_taskList)
+	const _taskList = storedList ? JSON.parse(storedList) : DEFAULT_TASK_LIST;
+	const taskList = writable(_taskList);
 
 	const { subscribe, update } = taskList;
 
@@ -58,7 +58,7 @@ function createStore() {
 			update((list) => [
 				...list,
 				{
-					id: `l-${list.length}`,
+					id: new Date().toISOString(),
 					text: `List ${list.length + 1}`,
 					items: []
 				}
@@ -70,7 +70,7 @@ function createStore() {
 				list[listIndex].items = [
 					...items,
 					{
-						id: `t-${list[listIndex].items.length}`,
+						id: new Date().toISOString(),
 						text: `Task ${list[listIndex].items.length + 1}`
 					}
 				];
@@ -78,29 +78,29 @@ function createStore() {
 			});
 		},
 		moveTask: (sourceData, moveToListIndex) => {
-			update(list => {
-				const [task] = list[sourceData.listIndex].items.splice(sourceData.taskIndex, 1)
-				list[moveToListIndex].items.push(task)
-				return list
-			})
+			update((list) => {
+				const [task] = list[sourceData.listIndex].items.splice(sourceData.taskIndex, 1);
+				list[moveToListIndex].items.push(task);
+				return list;
+			});
 		},
 		removeTask: (listIndex, taskIndex) => {
 			update((list) => {
-				list[listIndex].items = list[listIndex].items.filter((_, id) => id !== taskIndex)
-				return list
-			})
+				list[listIndex].items = list[listIndex].items.filter((_, id) => id !== taskIndex);
+				return list;
+			});
 		},
 		removeList: (listIndex) => {
 			update((list) => {
-				list.splice(listIndex, 1)
-				return list
-			})
+				list.splice(listIndex, 1);
+				return list;
+			});
 		},
 		updateList: (newText, listIndex) => {
 			update((list) => {
-				list[listIndex].text = newText
-				return list
-			})
+				list[listIndex].text = newText;
+				return list;
+			});
 		}
 	};
 }
@@ -111,6 +111,6 @@ export const taskListStore = createStore();
 // write list to storage
 taskListStore.subscribe((list) => {
 	if (list) {
-		localStorage.setItem("trello-store", JSON.stringify(list))
+		localStorage.setItem('trello-store', JSON.stringify(list));
 	}
-})
+});

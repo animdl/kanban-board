@@ -75,7 +75,7 @@
 				</div>
 			</Editable>
 		</div>
-		<div class="overflow-x-hidden overflow-y-auto with-scrollbar p-3">
+		<div class="overflow-x-hidden overflow-y-auto p-3">
 			<!-- loop through the items, pass the props, assign the id -->
 			<!-- can pass in the individual elements from the object -->
 			<!-- or can pass the entire object, and handle the assignment on the receiver side -->
