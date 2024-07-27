@@ -22,7 +22,7 @@
 			on:click={() => {
 				showEdit = false;
 				dispatch('Save', {
-					newText: value	
+					value	
 				});
 			}}>Save</button
 		>

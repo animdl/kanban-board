@@ -3,7 +3,7 @@
         Hello world!
     </h1>
 
-    <a href="/trello">
+    <a href="/trello" class="text-white">
         Trello
     </a>
 </div>

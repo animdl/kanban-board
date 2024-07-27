@@ -83,6 +83,24 @@ function createStore() {
 				list[moveToListIndex].items.push(task)
 				return list
 			})
+		},
+		removeTask: (listIndex, taskIndex) => {
+			update((list) => {
+				list[listIndex].items = list[listIndex].items.filter((_, id) => id !== taskIndex)
+				return list
+			})
+		},
+		removeList: (listIndex) => {
+			update((list) => {
+				list.splice(listIndex, 1)
+				return list
+			})
+		},
+		updateList: (newText, listIndex) => {
+			update((list) => {
+				list[listIndex].text = newText
+				return list
+			})
 		}
 	};
 }

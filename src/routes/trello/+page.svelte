@@ -4,7 +4,7 @@
 </script>
 
 <div class="p-10 h-full flex-it">
-	<a href="/">
+	<a href="/" class="text-white">
 		Home
 	</a>
 
