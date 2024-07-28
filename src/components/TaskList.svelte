@@ -5,7 +5,7 @@
 </script>
 
 <script>
-	import { taskListStore } from '../../stores/tasks';
+	import { taskListStore } from '../stores/tasks';
 	import Editable from './Editable.svelte';
 	import TaskItem from './TaskItem.svelte';
 	import { flip } from 'svelte/animate';

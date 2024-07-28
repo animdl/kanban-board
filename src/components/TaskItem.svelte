@@ -1,5 +1,5 @@
 <script>
-	import { taskListStore } from '../../stores/tasks';
+	import { taskListStore } from '../stores/tasks';
 	import Editable from './Editable.svelte';
 
 	export let task, listIndex, taskIndex;
